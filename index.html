@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>客户深度分析报告 · 刘女士（颖）购房需求与跟进策略</title>
+<style>
+  :root{
+    --ink:#161a22;
+    --ink2:#4a5568;
+    --ink3:#7b869c;
+    --line:#e4e8f0;
+    --bg:#f5f7fb;
+    --card:#ffffff;
+    --accent:#1b4f8a;
+    --accent-soft:#eaf1f9;
+    --gold:#a8791f;
+    --red:#b1362c;
+    --green:#1f7a5c;
+    --shadow:0 1px 2px rgba(16,24,40,.04), 0 8px 24px rgba(16,24,40,.06);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB","Source Han Sans SC",system-ui,-apple-system,"Segoe UI",sans-serif;
+    font-size:15px;
+    line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:linear-gradient(160deg,#0f2c4d 0%,#1b4f8a 58%,#2b6ba8 100%);
+    color:#fff;
+    padding:52px 0 34px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero:after{
+    content:"";position:absolute;right:-120px;top:-120px;width:420px;height:420px;
+    border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.14),rgba(255,255,255,0) 70%);
+  }
+  .kicker{
+    display:inline-block;font-size:12px;letter-spacing:.18em;
+    border:1px solid rgba(255,255,255,.4);border-radius:2px;
+    padding:5px 12px;margin-bottom:20px;color:rgba(255,255,255,.92);
+  }
+  .hero h1{font-size:34px;line-height:1.32;margin:0 0 14px;font-weight:700;letter-spacing:-.01em}
+  .hero .sub{font-size:13.5px;color:rgba(255,255,255,.72);margin:0;line-height:1.9}
+  .hero .sub b{color:#fff;font-weight:600}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.18);margin-top:34px;border:1px solid rgba(255,255,255,.18)}
+  .kpi{background:rgba(255,255,255,.06);padding:18px 20px}
+  .kpi .n{font-size:26px;font-weight:700;letter-spacing:-.01em}
+  .kpi .n small{font-size:13px;font-weight:500;margin-left:2px;opacity:.8}
+  .kpi .l{font-size:12px;color:rgba(255,255,255,.66);margin-top:2px}
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);
+    backdrop-filter:blur(8px);border-bottom:1px solid var(--line);
+  }
+  nav .wrap{display:flex;gap:4px;overflow-x:auto;padding:0 24px;height:50px;align-items:center}
+  nav a{
+    font-size:13px;color:var(--ink2);text-decoration:none;padding:6px 11px;border-radius:5px;
+    white-space:nowrap;transition:.15s;
+  }
+  nav a:hover{background:var(--accent-soft);color:var(--accent)}
+
+  /* ---------- SECTION ---------- */
+  section{padding:46px 0 6px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
+  .sec-no{
+    font-size:12px;font-weight:700;color:var(--accent);background:var(--accent-soft);
+    padding:2px 8px;border-radius:3px;letter-spacing:.06em;flex:none;
+  }
+  h2{font-size:22px;margin:0;font-weight:700;letter-spacing:-.01em}
+  .sec-desc{color:var(--ink2);font-size:14px;margin:6px 0 24px;max-width:840px}
+
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:10px;
+    padding:24px 26px;box-shadow:var(--shadow);
+  }
+  .card h3{font-size:15.5px;margin:0 0 12px;font-weight:700}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+
+  /* ---------- EXEC SUMMARY ---------- */
+  .verdict{
+    background:#fff;border:1px solid var(--line);border-left:4px solid var(--accent);
+    border-radius:8px;padding:26px 30px;box-shadow:var(--shadow);
+  }
+  .verdict .tag{
+    display:inline-block;font-size:11.5px;letter-spacing:.1em;color:var(--accent);
+    background:var(--accent-soft);padding:3px 9px;border-radius:3px;margin-bottom:12px;font-weight:700;
+  }
+  .verdict p{margin:0 0 12px;font-size:15.5px;line-height:1.85}
+  .verdict p:last-child{margin-bottom:0}
+  .verdict strong{color:var(--accent);font-weight:700}
+  .verdict .hl{background:linear-gradient(transparent 62%, #fdf0cf 62%);font-weight:600}
+
+  .finding{display:grid;grid-template-columns:26px 1fr;gap:12px;padding:14px 0;border-top:1px dashed var(--line)}
+  .finding:first-of-type{border-top:0;padding-top:4px}
+  .finding .idx{
+    width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;
+    font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:3px;
+  }
+  .finding b{display:block;font-size:14.5px;margin-bottom:2px}
+  .finding span{font-size:13.5px;color:var(--ink2)}
+
+  /* ---------- TABLE ---------- */
+  table{width:100%;border-collapse:collapse;font-size:13.5px;background:#fff}
+  th{
+    text-align:left;font-weight:600;font-size:12.5px;color:var(--ink3);
+    padding:11px 12px;border-bottom:1.5px solid var(--line);white-space:nowrap;
+    background:#fafbfd;
+  }
+  td{padding:12px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink)}
+  tr:last-child td{border-bottom:0}
+  td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+  .tbl-wrap{background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden;box-shadow:var(--shadow)}
+  .tbl-wrap .cap{padding:14px 16px;border-bottom:1px solid var(--line);font-size:13px;color:var(--ink2);background:#fafbfd}
+
+  .pill{display:inline-block;font-size:11.5px;padding:2px 8px;border-radius:20px;font-weight:600;white-space:nowrap;line-height:1.7}
+  .pill.ok{background:#e8f5ef;color:var(--green)}
+  .pill.mid{background:#fdf3e3;color:var(--gold)}
+  .pill.bad{background:#fceceb;color:var(--red)}
+  .pill.gray{background:#eef1f6;color:var(--ink2)}
+
+  /* ---------- BARS ---------- */
+  .bar-row{display:grid;grid-template-columns:132px 1fr 56px;align-items:center;gap:14px;margin-bottom:11px}
+  .bar-row .lab{font-size:13.5px;color:var(--ink);text-align:right;line-height:1.4}
+  .bar-track{height:9px;background:#eef1f6;border-radius:6px;overflow:hidden}
+  .bar-fill{height:100%;border-radius:6px;background:linear-gradient(90deg,#2b6ba8,#1b4f8a)}
+  .bar-fill.gold{background:linear-gradient(90deg,#d9a94a,#a8791f)}
+  .bar-fill.gray{background:linear-gradient(90deg,#b9c2d1,#8b96a8)}
+  .bar-row .val{font-size:13px;color:var(--ink2);font-variant-numeric:tabular-nums}
+
+  /* ---------- PROFILE ---------- */
+  .prof-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0}
+  .prof-item{padding:13px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:88px 1fr;gap:10px}
+  .prof-item:nth-last-child(-n+2){border-bottom:0}
+  .prof-item .k{font-size:12.5px;color:var(--ink3)}
+  .prof-item .v{font-size:13.5px;font-weight:500}
+  .prof-grid .prof-item:nth-child(odd){padding-right:22px;border-right:1px solid var(--line)}
+  .prof-grid .prof-item:nth-child(even){padding-left:22px}
+
+  /* ---------- QUOTE ---------- */
+  .quote{
+    background:#fbfcfe;border-left:3px solid #cfd8e6;padding:12px 18px;margin:12px 0;
+    font-size:13.5px;color:#33415c;line-height:1.8;border-radius:0 6px 6px 0;
+  }
+  .quote .who{font-size:12px;color:var(--ink3);margin-top:4px}
+  .quote em{font-style:normal;background:#fdf0cf;padding:0 2px}
+
+  /* ---------- TIMELINE ---------- */
+  .tl{position:relative;padding-left:26px}
+  .tl:before{content:"";position:absolute;left:6px;top:6px;bottom:6px;width:2px;background:linear-gradient(#cfd8e6,#e4e8f0)}
+  .tl-item{position:relative;padding:0 0 22px}
+  .tl-item:before{
+    content:"";position:absolute;left:-26px;top:5px;width:10px;height:10px;border-radius:50%;
+    background:#fff;border:2px solid var(--accent);
+  }
+  .tl-item.key:before{background:var(--gold);border-color:var(--gold)}
+  .tl-date{font-size:12px;color:var(--ink3);letter-spacing:.04em;font-variant-numeric:tabular-nums}
+  .tl-title{font-size:14.5px;font-weight:600;margin:1px 0 2px}
+  .tl-body{font-size:13.5px;color:var(--ink2)}
+
+  /* ---------- STEPS ---------- */
+  .step{
+    background:#fff;border:1px solid var(--line);border-radius:10px;padding:20px 22px;
+    box-shadow:var(--shadow);position:relative;
+  }
+  .step .no{
+    position:absolute;top:-13px;left:20px;background:var(--accent);color:#fff;
+    font-size:11.5px;font-weight:700;padding:2px 10px;border-radius:4px;letter-spacing:.08em;
+  }
+  .step h4{margin:6px 0 8px;font-size:15px}
+  .step ul{margin:0;padding-left:17px;font-size:13.5px;color:var(--ink2)}
+  .step li{margin-bottom:5px}
+  .step .when{font-size:12px;color:var(--accent);font-weight:600;letter-spacing:.04em}
+
+  .callout{
+    background:#fffaf0;border:1px solid #f0e0bd;border-radius:10px;padding:18px 22px;font-size:14px;color:#5b4620;
+  }
+  .callout b{color:#8a6a1f}
+  .callout.blue{background:#f2f7fd;border-color:#d6e4f3;color:#1c3f66}
+  .callout.blue b{color:var(--accent)}
+  .callout.red{background:#fdf5f4;border-color:#f2d9d6;color:#6d2b24}
+  .callout.red b{color:var(--red)}
+
+  .tagline{font-size:12px;color:var(--ink3);letter-spacing:.1em;font-weight:600;margin:26px 0 10px}
+
+  footer{margin-top:56px;padding:28px 0 46px;border-top:1px solid var(--line);color:var(--ink3);font-size:12.5px;line-height:1.9}
+  footer b{color:var(--ink2)}
+
+  @media (max-width:900px){
+    .kpis{grid-template-columns:repeat(2,1fr)}
+    .grid2,.grid3{grid-template-columns:1fr}
+    .prof-grid{grid-template-columns:1fr}
+    .prof-grid .prof-item:nth-child(odd){border-right:0;padding-right:0}
+    .prof-grid .prof-item:nth-child(even){padding-left:0}
+    .hero h1{font-size:25px}
+    .bar-row{grid-template-columns:96px 1fr 44px;gap:9px}
+    section{padding:34px 0 4px}
+  }
+  @media print{nav{display:none}body{background:#fff}.card,.tbl-wrap,.step{box-shadow:none}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker">客户深度分析 · 团队内部</div>
+    <h1>刘女士（颖）购房需求分析与跟进策略</h1>
+    <p class="sub">
+      数据来源：微信工作群沟通记录 <b>2026.08.01 — 2026.10.11</b>，共 <b>421</b> 条消息（含客户与「东哥」「刘老师」三方对话）<br>
+      分析对象：置换型改善客户 · 大源建发业主持有人 &nbsp;|&nbsp; 报告生成：<b>2026年10月30日</b>
+    </p>
+    <div class="kpis">
+      <div class="kpi"><div class="n">71<small>天</small></div><div class="l">首次接触到最后记录</div></div>
+      <div class="kpi"><div class="n">11<small>个</small></div><div class="l">已触达/讨论项目</div></div>
+      <div class="kpi"><div class="n">4<small>个</small></div><div class="l">客户明确否决</div></div>
+      <div class="kpi"><div class="n">3<small>位</small></div><div class="l">实际决策参与者</div></div>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <div class="wrap">
+    <a href="#s1">结论先行</a>
+    <a href="#s2">客户画像</a>
+    <a href="#s3">需求解构</a>
+    <a href="#s4">资金与决策链</a>
+    <a href="#s5">楼盘评估</a>
+    <a href="#s6">决策心理</a>
+    <a href="#s7">卡点与风险</a>
+    <a href="#s8">90天方案</a>
+    <a href="#s9">时间线</a>
+    <a href="#s10">话术库</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<!-- ================= 1 ================= -->
+<section id="s1">
+  <div class="sec-head"><span class="sec-no">01</span><h2>结论先行</h2></div>
+  <p class="sec-desc">如果只看一件事：这不是一个"没看中房子"的客户，而是一个"卡在卖房回款和丈夫签字"的客户。她的楼盘清单已经收敛，问题在成交链条上。</p>
+
+  <div class="verdict">
+    <span class="tag">核心判断</span>
+    <p>客户刘女士<b>已完成 80% 的自我说服</b>——她在 9 月初就自己给出了答案：「卓萃太偏，西派交房太晚，咋看都觉得翡悦最合适」。此后近两个月没有新的否定意见，所有反复都围绕<strong>价格、回款、丈夫意见</strong>打转，而不是产品本身。</p>
+    <p>真正的卡点是三重错配：<span class="hl">卖房价格差 35 万</span> · <span class="hl">丈夫长期异地、只给方向不给决策</span> · <span class="hl">心仪楼盘总价超预算 70-200 万且交付在 2028 年底</span>。</p>
+    <p><strong>策略结论：</strong>停止继续"带看新盘"，把 80% 的精力投到 <b>帮她卖掉大源房子</b> 上；同时用一份一页纸对比表把丈夫拉进决策，把"选哪个盘"从开放式讨论变成二选一。她缺的不是选项，是确定感。</p>
+  </div>
+
+  <div class="card" style="margin-top:18px">
+    <h3>四个关键发现</h3>
+    <div class="finding"><div class="idx">1</div><div>
+      <b>需求已经收敛，别再扩大选项池</b>
+      <span>11 个项目中已否决 4 个（卓萃配套、云锦66无阳台、天郡产品调性、交子缦华价格）。客户自述「认识你们以前，我把能看的都看完了」——继续投喂新盘只会加重她的决策疲劳。</span>
+    </div></div>
+    <div class="finding"><div class="idx">2</div><div>
+      <b>"四代宅执念"是伪需求，"阳台能隔出花园"才是真需求</b>
+      <span>她 8/19 明确否认执念：「四代宅没有执念，阳台有一个，小一点都可以」。9/8 又说「花园不是女人的终极梦想吗」。这是一个可以被 500 万以内的顶跃、甚至老规大平层满足的需求，不必绑死在四代宅上。</span>
+    </div></div>
+    <div class="finding"><div class="idx">3</div><div>
+      <b>预算表述前后矛盾，真实上限约 450-500 万</b>
+      <span>8/19 说「最佳五百万」，9/3 却主动询价 570 万的翡悦 208，9/5 又回头谈 508 万的二楼。说明 500 万是"心理舒适线"而非"能力上限"，但她对月供极度敏感（「怕贷款还不上」），所以推 570 万必须先解决"月供怎么算"这个问题。</span>
+    </div></div>
+    <div class="finding"><div class="idx">4</div><div>
+      <b>当前有一个正在关闭的时间窗口</b>
+      <span>她 7 月由其他中介带看西派天麓与翡悦天华，行业常规 3 个月客户保护期——<b>10 月正好到期</b>。同时她一直在等的明信锦江生态带项目，10 月亮相。这两件事叠加，构成本季度最好的推进理由。</span>
+    </div></div>
+  </div>
+</section>
+
+<!-- ================= 2 ================= -->
+<section id="s2">
+  <div class="sec-head"><span class="sec-no">02</span><h2>客户画像</h2></div>
+  <p class="sec-desc">一位高意向、高信息密度、但决策权限不完全在自己手上的置换客户。</p>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>基本信息</h3>
+      <div class="prof-grid">
+        <div class="prof-item"><div class="k">称呼</div><div class="v">刘女士 / 微信名「颖」</div></div>
+        <div class="prof-item"><div class="k">年龄段</div><div class="v">1986 年生，40 岁，金牛座（本人自述）</div></div>
+        <div class="prof-item"><div class="k">工作地</div><div class="v">金牛区（通勤与买房板块关联度低）</div></div>
+        <div class="prof-item"><div class="k">现居</div><div class="v">高新区大源 · 建发项目（房龄较老）</div></div>
+        <div class="prof-item"><div class="k">家庭</div><div class="v">已婚，一子；丈夫长期异地，年内极少回蓉</div></div>
+        <div class="prof-item"><div class="k">资产</div><div class="v">大源房产 1 套（在售）＋ 另一套住房（可过渡）</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>客户分级</h3>
+      <div class="bar-row"><div class="lab">意向强度</div><div class="bar-track"><div class="bar-fill" style="width:92%"></div></div><div class="val">A 级</div></div>
+      <div class="bar-row"><div class="lab">购买力</div><div class="bar-track"><div class="bar-fill" style="width:74%"></div></div><div class="val">中高</div></div>
+      <div class="bar-row"><div class="lab">决策自主度</div><div class="bar-track"><div class="bar-fill gold" style="width:45%"></div></div><div class="val">偏低</div></div>
+      <div class="bar-row"><div class="lab">成交紧迫度</div><div class="bar-track"><div class="bar-fill" style="width:86%"></div></div><div class="val">高</div></div>
+      <div class="bar-row"><div class="lab">信息专业度</div><div class="bar-track"><div class="bar-fill" style="width:88%"></div></div><div class="val">高</div></div>
+      <div class="bar-row"><div class="lab">信任基础</div><div class="bar-track"><div class="bar-fill" style="width:80%"></div></div><div class="val">较好</div></div>
+      <div style="margin-top:16px;font-size:13px;color:var(--ink2);border-top:1px dashed var(--line);padding-top:14px">
+        <b>综合评级：A-（高意向 · 待解锁）</b><br>
+        关系已建立（主动求助卖房、分享政策与视频、称"沾你们的光"），但成交钥匙不在她一个人手里。
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:18px">
+    <h3>她的三个真实痛点（按情绪强度排序）</h3>
+    <div class="grid3">
+      <div>
+        <div class="pill bad">最痛</div>
+        <p style="font-size:13.5px;color:var(--ink2);margin:8px 0 0">
+          <b>孩子上学通勤。</b>「这两天娃儿上学天天迟到，受不了了简直」「我娃前天没赶上校车，高峰期送过去 45 分钟，到学校第一节下课了」。这是唯一让她"睡不着"的问题。
+        </p>
+      </div>
+      <div>
+        <div class="pill mid">次痛</div>
+        <p style="font-size:13.5px;color:var(--ink2);margin:8px 0 0">
+          <b>卖房被砍价。</b>「我的房给我砍到 300W，咋卖嘛，肉疼」「去年 460」。挂牌 350+，心理底价 335 含车位，差距 35 万。
+        </p>
+      </div>
+      <div>
+        <div class="pill gray">隐痛</div>
+        <p style="font-size:13.5px;color:var(--ink2);margin:8px 0 0">
+          <b>收入预期不稳。</b>「未来收入真的不一定稳定」「主要是现在钱太难挣了，怕贷款还不上」。她怕的不是贵，是断供。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 3 ================= -->
+<section id="s3">
+  <div class="sec-head"><span class="sec-no">03</span><h2>需求解构：什么是刚性，什么是弹性</h2></div>
+  <p class="sec-desc">客户口头说"既要又要还要"，但把 6 条诉求按"她说过几次、为它否决过几个盘"排序后，权重非常清晰。这张表是后面所有推荐的地基。</p>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>诉求权重（按否决行为反推）</h3>
+      <div class="bar-row"><div class="lab">接送/距校距离</div><div class="bar-track"><div class="bar-fill" style="width:95%"></div></div><div class="val">刚性</div></div>
+      <div class="bar-row"><div class="lab">阳台/可做花园</div><div class="bar-track"><div class="bar-fill" style="width:90%"></div></div><div class="val">刚性</div></div>
+      <div class="bar-row"><div class="lab">总价与月供</div><div class="bar-track"><div class="bar-fill" style="width:85%"></div></div><div class="val">刚性</div></div>
+      <div class="bar-row"><div class="lab">周边商业配套</div><div class="bar-track"><div class="bar-fill gold" style="width:65%"></div></div><div class="val">弹性</div></div>
+      <div class="bar-row"><div class="lab">交付时间</div><div class="bar-track"><div class="bar-fill gold" style="width:50%"></div></div><div class="val">弹性</div></div>
+      <div class="bar-row"><div class="lab">二手流通性</div><div class="bar-track"><div class="bar-fill gray" style="width:35%"></div></div><div class="val">弱</div></div>
+      <div class="bar-row"><div class="lab">"第四代住宅"</div><div class="bar-track"><div class="bar-fill gray" style="width:20%"></div></div><div class="val">伪需求</div></div>
+    </div>
+
+    <div class="card">
+      <h3>原始诉求原文（8/19 客户自述）</h3>
+      <div class="quote">
+        「我的诉求，离学校近点，有个阳台，最好 500 以内，就这些。嗷嗷，地点有些商业，不用陪跑太久。」
+        <div class="who">—— 颖，2026-08-19 20:41，一次性给出全部条件</div>
+      </div>
+      <div class="quote">
+        「离学校近，有价值，二手房好流通，没有多余资金去加杠杆的这种，哈哈哈哈哈。现在买房比当年选老公还难。」
+        <div class="who">—— 颖，2026-09-11 09:44（此时已进入自我怀疑期）</div>
+      </div>
+      <div style="background:#f2f7fd;border-radius:8px;padding:14px 16px;font-size:13.5px;color:#1c3f66;margin-top:6px">
+        <b>解读：</b>"有价值 + 好流通"是她自己加的软条件，但她同时说"后期也可能不想换了"——<b>本质是自住终老型需求，流通性只是安全感的话术</b>。不要用投资逻辑说服她，要用"以后不用再折腾"来说服她。
+      </div>
+    </div>
+  </div>
+
+  <div class="callout blue" style="margin-top:18px">
+    <b>关键翻译：</b>"陪跑太久"= 她怕买在配套空白区等 5-10 年（卓萃被她判死刑的唯一原因）；"阳台"= 她要一块能种东西的地（9/8 原话"花园是女人的终极梦想"）。<b>所以真正的产品筛选条件应该是：现成配套 + 有可改造的户外空间 + 距校通勤可改善。</b>三条同时满足，四代宅只是其中一种解法。
+  </div>
+</section>
+
+<!-- ================= 4 ================= -->
+<section id="s4">
+  <div class="sec-head"><span class="sec-no">04</span><h2>资金链条与决策链</h2></div>
+  <p class="sec-desc">这是整份报告里最需要算清楚的部分。她的购买力不是由收入决定，而是由"大源这套房能卖多少、多久卖掉"决定。</p>
+
+  <div class="tbl-wrap">
+    <div class="cap">大源房产出售测算（客户自述数据）</div>
+    <table>
+      <thead><tr><th>项目</th><th>金额</th><th>依据 / 说明</th></tr></thead>
+      <tbody>
+        <tr><td>去年市场价参考</td><td class="num">约 460 万</td><td>客户 9/19 原话：「我这真是卖不上价了，去年 460」</td></tr>
+        <tr><td>当前挂牌价</td><td class="num">350 万+</td><td>团队记忆「挂牌好像是 350+」，多渠道挂牌</td></tr>
+        <tr><td>买家实际出价</td><td class="num">300 万</td><td>9/8 客户反馈「我的房给我砍到 300W」</td></tr>
+        <tr><td><b>客户心理底价</b></td><td class="num"><b>335 万（含车位）</b></td><td>9/19 明确给出；净收，不含中介费</td></tr>
+        <tr><td>贝壳佣金（1.75%）</td><td class="num">约 5.9 万</td><td>客户确认由卖方承担</td></tr>
+        <tr><td><b>预计净回款</b></td><td class="num"><b>约 329 万</b></td><td>335 − 5.9；若走团队渠道可省下这部分</td></tr>
+        <tr><td>与买家出价缺口</td><td class="num" style="color:var(--red)"><b>35 万</b></td><td>客户自述「距离我的心里成交价差 35 万」</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="grid2" style="margin-top:18px">
+    <div class="card">
+      <h3>新房月供压力测算（估算）</h3>
+      <p style="font-size:12.5px;color:var(--ink3);margin:0 0 12px">假设：首套/二套按 15% 首付（客户 9/5 已确认「首付 15%」）、商贷 30 年、年利率按 3.0% 估算，等额本息。仅作量级参考。</p>
+      <table>
+        <thead><tr><th>总价</th><th>首付</th><th>贷款</th><th>月供</th></tr></thead>
+        <tbody>
+          <tr><td class="num">380 万</td><td class="num">57 万</td><td class="num">323 万</td><td class="num"><b>1.36 万</b></td></tr>
+          <tr><td class="num">450 万</td><td class="num">67.5 万</td><td class="num">382 万</td><td class="num"><b>1.61 万</b></td></tr>
+          <tr><td class="num">500 万</td><td class="num">75 万</td><td class="num">425 万</td><td class="num"><b>1.79 万</b></td></tr>
+          <tr><td class="num" style="color:var(--red)">570 万</td><td class="num" style="color:var(--red)">85.5 万</td><td class="num" style="color:var(--red)">485 万</td><td class="num" style="color:var(--red)"><b>2.04 万</b></td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:13px;color:var(--ink2);margin:12px 0 0">
+        若卖房净回款 329 万全部投入，500 万总价仅需贷款约 171 万，月供约 <b>7,200 元</b>——这才是她真正能接受的舒适区。<b>推 570 万之前，必须先谈清"卖房款怎么用"，否则一定被拒。</b>
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>决策链：三个人，三票</h3>
+      <div class="prof-item"><div class="k">刘女士</div><div class="v">
+        <b>产品决策人 + 执行人。</b>看房、比价、谈判全由她做，情绪驱动，会主动做功课（研究 489 限高、C23 组团）。<span class="pill ok">支持</span>
+      </div></div>
+      <div class="prof-item"><div class="k">丈夫</div><div class="v">
+        <b>资金决策人 + 一票否决。</b>长期异地，仅表态"先卖后买、不想有压力"，从未实地看过四代宅。<span class="pill bad">关键卡点</span>
+      </div></div>
+      <div class="prof-item"><div class="k">母亲</div><div class="v">
+        <b>偏好影响者。</b>「我妈喜欢西派」——这是西派天麓始终没被彻底排除的隐性原因。<span class="pill mid">可借力</span>
+      </div></div>
+      <div style="margin-top:14px;background:#fdf5f4;border:1px solid #f2d9d6;border-radius:8px;padding:14px 16px;font-size:13.5px;color:#6d2b24">
+        <b>结构性风险：</b>从 8/1 到 10/11，<b>丈夫一次都没出现在带看现场</b>。她说过三次"等我老公"（8/21、8/21、8/19）。只要这个人不参与，任何价格谈判都会在最后一步崩掉。
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 5 ================= -->
+<section id="s5">
+  <div class="sec-head"><span class="sec-no">05</span><h2>楼盘评估矩阵</h2></div>
+  <p class="sec-desc">权重取自第 03 节的需求排序：接送 25%、阳台/花园 20%、总价 20%、配套 15%、交付 10%、流通 10%。评分为 1-5 分，结合客户实际态度校准，不是客观产品力排名。</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th style="min-width:150px">项目</th>
+          <th>板块</th>
+          <th>关键参数</th>
+          <th style="text-align:center">接送</th>
+          <th style="text-align:center">产品</th>
+          <th style="text-align:center">总价</th>
+          <th style="text-align:center">配套</th>
+          <th style="text-align:center">交付</th>
+          <th style="text-align:center">加权</th>
+          <th style="min-width:96px">客户态度</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>明信·锦江生态带</b><br><span style="font-size:12px;color:var(--ink3)">待亮相（10 月）</span></td>
+          <td>锦江生态带</td>
+          <td class="num">150㎡ 约 380-400 万<br>地价 1.17 万/㎡</td>
+          <td style="text-align:center">4</td><td style="text-align:center">5</td><td style="text-align:center">4</td>
+          <td style="text-align:center">3</td><td style="text-align:center">1</td>
+          <td style="text-align:center"><b style="color:var(--accent)">3.65</b></td>
+          <td><span class="pill ok">主动等待</span></td>
+        </tr>
+        <tr>
+          <td><b>远达·麓湖云邸</b><br><span style="font-size:12px;color:var(--ink3)">顶跃 · 现房</span></td>
+          <td>麓湖（泛湖区）</td>
+          <td class="num">顶跃带大花园<br>特价约 500 万</td>
+          <td style="text-align:center">4</td><td style="text-align:center">5</td><td style="text-align:center">2</td>
+          <td style="text-align:center">3</td><td style="text-align:center">5</td>
+          <td style="text-align:center"><b style="color:var(--accent)">3.55</b></td>
+          <td><span class="pill mid">有兴趣未看</span></td>
+        </tr>
+        <tr>
+          <td><b>西派天麓</b></td>
+          <td>锦江生态带</td>
+          <td class="num">约 150㎡ 380-400 万<br>2028 年底交付</td>
+          <td style="text-align:center">3</td><td style="text-align:center">5</td><td style="text-align:center">4</td>
+          <td style="text-align:center">3</td><td style="text-align:center">1</td>
+          <td style="text-align:center"><b>3.40</b></td>
+          <td><span class="pill mid">心动但嫌晚</span></td>
+        </tr>
+        <tr>
+          <td><b>中铁卓萃</b></td>
+          <td>天府新区</td>
+          <td class="num">145 / 183㎡<br>四代宅标杆</td>
+          <td style="text-align:center">2</td><td style="text-align:center">5</td><td style="text-align:center">4</td>
+          <td style="text-align:center">2</td><td style="text-align:center">4</td>
+          <td style="text-align:center"><b>3.30</b></td>
+          <td><span class="pill bad">已放弃</span></td>
+        </tr>
+        <tr>
+          <td><b>保利天府和颂 二期</b></td>
+          <td>锦江生态带南</td>
+          <td class="num">199㎡ 楼王<br>大幅降价清盘</td>
+          <td style="text-align:center">3</td><td style="text-align:center">3</td><td style="text-align:center">3</td>
+          <td style="text-align:center">3</td><td style="text-align:center">5</td>
+          <td style="text-align:center"><b>3.20</b></td>
+          <td><span class="pill mid">看过未定</span></td>
+        </tr>
+        <tr>
+          <td><b>天郡（天珺）</b></td>
+          <td>高新/天新</td>
+          <td class="num">173㎡ 560 万起</td>
+          <td style="text-align:center">3</td><td style="text-align:center">3</td><td style="text-align:center">2</td>
+          <td style="text-align:center">4</td><td style="text-align:center">4</td>
+          <td style="text-align:center"><b>3.05</b></td>
+          <td><span class="pill bad">明确不喜欢</span></td>
+        </tr>
+        <tr>
+          <td><b>云锦 66</b></td>
+          <td>新川</td>
+          <td class="num">170㎡ 洋房<br>无阳台、楼间距近</td>
+          <td style="text-align:center">3</td><td style="text-align:center">2</td><td style="text-align:center">4</td>
+          <td style="text-align:center">2</td><td style="text-align:center">4</td>
+          <td style="text-align:center"><b>2.95</b></td>
+          <td><span class="pill bad">已否决</span></td>
+        </tr>
+        <tr>
+          <td><b>中海翡悦天华</b></td>
+          <td>天东</td>
+          <td class="num">208㎡ 570-650 万<br>2028 年底交付</td>
+          <td style="text-align:center">3</td><td style="text-align:center">4</td><td style="text-align:center">1</td>
+          <td style="text-align:center">4</td><td style="text-align:center">1</td>
+          <td style="text-align:center"><b>2.65</b></td>
+          <td><span class="pill ok">最心动</span></td>
+        </tr>
+        <tr>
+          <td><b>交子缦华</b></td>
+          <td>林家坝</td>
+          <td class="num">165-255㎡<br>800-1200 万</td>
+          <td style="text-align:center">1</td><td style="text-align:center">5</td><td style="text-align:center">1</td>
+          <td style="text-align:center">4</td><td style="text-align:center">3</td>
+          <td style="text-align:center"><b>2.40</b></td>
+          <td><span class="pill gray">已排除</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout red" style="margin-top:18px">
+    <b>这张表最重要的一行矛盾：</b>客户"最心动"的翡悦天华（2.65 分），恰好是评分最低的可行选项之一；评分最高的明信（3.65 分），是她唯一愿意"等"的项目。<b>说明她的情感偏好与理性评分是分离的——这正是需要顾问介入的地方，不是顺着她的心动走。</b>
+  </div>
+
+  <div class="grid3" style="margin-top:18px">
+    <div class="card">
+      <h3 style="color:var(--green)">短期可落地</h3>
+      <p style="font-size:13.5px;color:var(--ink2);margin:0">
+        <b>远达·麓湖云邸 顶跃 500 万</b><br>
+        现房、顶楼复式带大花园、距校比她现住更近。唯一硬伤是总价略超舒适线且二手流通偏弱。建议做"实景带看"——现房的说服力远超期房图纸。
+      </p>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--accent)">中期最优解</h3>
+      <p style="font-size:13.5px;color:var(--ink2);margin:0">
+        <b>明信·锦江生态带 150㎡ 约 380-400 万</b><br>
+        总价比翡悦低 170 万以上、离校更近、4 代宅产品、锦江生态带不偏。交付 2028 年底，但她是置换且另有住房，时间可承受。10 月亮相，必须第一时间带看。
+      </p>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--gold)">情绪解药</h3>
+      <p style="font-size:13.5px;color:var(--ink2);margin:0">
+        <b>西派天麓</b><br>
+        "一眼心动""情绪价值拉满"，且母亲站队。虽然 2028 年底交付被嫌晚，但它是把客户留在牌桌上的锚点。<b>不要否定它，用它做价格锚：同价位、同交付，明信更划算。</b>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 6 ================= -->
+<section id="s6">
+  <div class="sec-head"><span class="sec-no">06</span><h2>客户真实决策心理</h2></div>
+  <p class="sec-desc">四个贯穿 71 天的行为模式。理解这些，比记住楼盘参数更有用。</p>
+
+  <div class="card">
+    <div class="finding"><div class="idx">A</div><div>
+      <b>她不是"要得太多"，是"怕选错"</b>
+      <span>每次出现新信息（政策、涨价传闻、新盘视频）她都会重新评估一遍。9/5 看到"上涨 6.8%"的文章，立刻说"心好慌"，当天就把翡悦的价格、楼层、诚意金历史全部翻出来复盘——这是典型的<b>焦虑型决策</b>，需要的是"确定性"，不是"更多选项"。</span>
+    </div></div>
+    <div class="finding"><div class="idx">B</div><div>
+      <b>她会自己做功课，且水平不低</b>
+      <span>主动研究天东 489 米超高层限高、麓湖 C23 组团、天西万象城落子，能判断"天东孤军奋战"的含义。对这类客户，<b>信息必须准，一次报错就失去专业信任</b>；同时可以把她当半个同行沟通，效率更高。</span>
+    </div></div>
+    <div class="finding"><div class="idx">C</div><div>
+      <b>她在用"降价"惩罚自己，需要被阻止</b>
+      <span>「为了买房我这二手是一降再降」「我怕不好卖呀」。东哥 9/5 已经明确劝过"不要毛起降价"，她听进去了但没执行。这是全案最该介入的点：<b>她的每一次降价，都是在替未来的自己亏钱。</b></span>
+    </div></div>
+    <div class="finding"><div class="idx">D</div><div>
+      <b>她对团队有真实好感，愿意双向付出</b>
+      <span>主动让团队帮卖房、分享政策文章、把闺蜜介绍给合作商家、说"沾沾买房好运"。这种关系已经超出普通客户，<b>可以用"我们帮你卖"换取"你听我们一次建议"的软性承诺</b>。</span>
+    </div></div>
+  </div>
+
+  <div class="tagline">几句值得反复读的原话</div>
+  <div class="quote">「<em>卓萃太偏，西派交房太晚，咋看都觉得翡悦最合适</em>」<div class="who">2026-09-03 —— 她自己的结论，此后从未推翻</div></div>
+  <div class="quote">「<em>在没啥盘了，认识你们以前，我把能看的都看完了</em>」<div class="who">2026-09-08 —— 选项池已耗尽，再推新盘是负作用</div></div>
+  <div class="quote">「<em>既想离学校近，又要有价值，二手房好流通，还没有多余资金去加杠杆</em>」<div class="who">2026-09-11 —— 她自己也知道这是不可能的三角，说完就笑了</div></div>
+  <div class="quote">「<em>其实算下来还是麓湖最值得……看了 C23，梦中情房，不敢想象住在那得幸福成啥样</em>」<div class="who">2026-09-11 —— 她真正想要的是一种生活想象，不是某个户型</div></div>
+</section>
+
+<!-- ================= 7 ================= -->
+<section id="s7">
+  <div class="sec-head"><span class="sec-no">07</span><h2>卡点与风险</h2></div>
+  <p class="sec-desc">按"会不会直接导致丢单"排序。</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th style="min-width:160px">卡点</th><th>表现</th><th>影响</th><th style="min-width:88px">等级</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><b>① 卖房未成交</b></td>
+          <td>挂牌 350+，出价 300，底价 335，缺口 35 万；已挂多渠道无果</td>
+          <td>回款不到位 → 不敢下定 → 所有新房谈判都停在"等我卖了再说"</td>
+          <td><span class="pill bad">致命</span></td>
+        </tr>
+        <tr>
+          <td><b>② 丈夫缺位</b></td>
+          <td>全年极少回蓉，从未实地看盘，只给"先卖后买"的方向性指令</td>
+          <td>无法拍板；即使谈成价格也会在签约前被叫停</td>
+          <td><span class="pill bad">致命</span></td>
+        </tr>
+        <tr>
+          <td><b>③ 交付与回款错配</b></td>
+          <td>心仪的翡悦、西派、明信均为 2028 年底交付，而她手里另一套房可过渡</td>
+          <td>实际可承受，但被她误读为"等太久"，成为否决理由</td>
+          <td><span class="pill mid">可解</span></td>
+        </tr>
+        <tr>
+          <td><b>④ 预算与心动的矛盾</b></td>
+          <td>舒适线 500 万，心动盘 570 万起，且对月供高度敏感</td>
+          <td>推高价盘易引发防御性退缩，甚至中断沟通</td>
+          <td><span class="pill mid">可解</span></td>
+        </tr>
+        <tr>
+          <td><b>⑤ 客户保护期</b></td>
+          <td>7 月由其他中介带看西派、翡悦，3 个月保护期</td>
+          <td>若在保护期内成交，佣金归属他人</td>
+          <td><span class="pill ok">已到期</span></td>
+        </tr>
+        <tr>
+          <td><b>⑥ 情绪性决策</b></td>
+          <td>9/5 新政文章后"心好慌"，险些为涨价传闻冲动下定</td>
+          <td>可能买错，也可能被竞品用同样话术截单</td>
+          <td><span class="pill mid">需守</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout" style="margin-top:18px">
+    <b>一个容易被忽略的利好：</b>她 8/25 主动提出"帮我卖下房呗"，把自己的房源链接交给了团队。这是客户主动递出的<b>信任凭证</b>——只要在卖房这件事上做出可见进展（哪怕只是每周一次带看反馈），新房端的建议权就会显著提升。反之，如果卖房端毫无动作，之前积累的好感会快速折旧。
+  </div>
+</section>
+
+<!-- ================= 8 ================= -->
+<section id="s8">
+  <div class="sec-head"><span class="sec-no">08</span><h2>90 天行动方案</h2></div>
+  <p class="sec-desc">核心原则：<b>先修成交链，再谈楼盘。</b>顺序错了，带看多少次都是空转。</p>
+
+  <div class="grid2">
+    <div class="step">
+      <span class="no">STEP 1 · 本周</span>
+      <div class="when">10/30 — 11/05</div>
+      <h4>把卖房变成"有进度的事"</h4>
+      <ul>
+        <li>重新核价：以 335 万含车位为锚，做一份 <b>同小区近 90 天成交对比表</b>（面积/楼层/装修/成交价），把"335 是怎么来的"讲成事实而非期望</li>
+        <li>提出<b>净收方案</b>：走团队渠道省下 1.75%（约 5.9 万），等于变相降价 5.9 万而客户不少拿钱——这是唯一能同时打动她和买家的杠杆</li>
+        <li>每周固定一次带看反馈（周日晚），用数字说话：本周带看 3 组、出价 1 组、卡点在哪</li>
+        <li>房源包装升级：重新拍图、写卖点文案（大源学区+生活氛围，用东哥"大源需要看得懂的人才值钱"的逻辑）</li>
+      </ul>
+    </div>
+
+    <div class="step">
+      <span class="no">STEP 2 · 两周内</span>
+      <div class="when">11/01 — 11/15</div>
+      <h4>把丈夫拉进决策，只拉一次</h4>
+      <ul>
+        <li>不要求他回成都。约一次 <b>20 分钟视频三方会议</b>，她在场，团队只讲三件事：卖房进度、资金方案、两个候选盘</li>
+        <li>会前发一份<b>一页纸</b>：总价 / 首付 / 月供 / 距校车程 / 交付时间，四个数字对比两个项目，让他做选择题而非问答题</li>
+        <li>话术锚点：「哥关心的不是买哪个，是不要让家里背压力。我们算过，卖房款到位后月供 7 千出头」——把他的"怕"翻译成方案</li>
+        <li>争取一个软承诺：<b>"只要卖到 33x，就定"</b>。有了这句话，后面所有动作都有落点</li>
+      </ul>
+    </div>
+
+    <div class="step">
+      <span class="no">STEP 3 · 本月内</span>
+      <div class="when">11 月</div>
+      <h4>锁定标的：从"开放讨论"变"二选一"</h4>
+      <ul>
+        <li><b>首推 · 明信锦江生态带</b>：10 月亮相，150㎡ 约 380-400 万，离校比现住近，总价比翡悦低 170 万。用"同板块、同交付、省 170 万"直接对冲西派情结</li>
+        <li><b>备选 · 远达麓湖云邸顶跃</b>：现房 + 大花园 + 500 万，解决"花园梦"最快路径。务必安排实景带看，现房的冲击力是期房的三倍</li>
+        <li><b>保留 · 西派天麓</b>：不否定，作为价格锚使用；同时回应母亲偏好，维持家庭内部和谐</li>
+        <li><b>暂缓 · 翡悦天华</b>：不主动推。若她主动提起，只做一件事——把 570 万对应的月供 2.04 万算给她看</li>
+      </ul>
+    </div>
+
+    <div class="step">
+      <span class="no">STEP 4 · 持续</span>
+      <div class="when">全程</div>
+      <h4>三个必须守住的纪律</h4>
+      <ul>
+        <li><b>不再新增选项。</b>她已经明确说"没盘了"。每多推一个盘，决策疲劳加一层，成交概率降一格</li>
+        <li><b>不跟着她的情绪走。</b>她慌的时候（政策/涨价新闻）不要催单，要给她"我们算过了"的确定性；她冷的时候（一周不发言）发一条卖房进度即可，不追问买房</li>
+        <li><b>不承诺价格。</b>翡悦"诚意金申请价格未获回复"的历史已经消耗过一次信任，任何"能申请到 xx 万"的口头承诺都不要给</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout blue" style="margin-top:22px">
+    <b>本季度唯一的关键动作（如果只能做一件事）：</b>把明信锦江生态带项目的首开信息，在她看到任何其他中介发的消息之前，第一个发给她，并附上一句「150 平大概 380-400，比西派近、比翡悦便宜 170 万，交付时间一样。<b>我带你去看看，不用现在定。</b>」<br>
+    —— 这句话同时解决了：总价焦虑（便宜）、距离痛点（更近）、交付借口（一样晚，无从反驳）、决策压力（不用现在定）。
+  </div>
+</section>
+
+<!-- ================= 9 ================= -->
+<section id="s9">
+  <div class="sec-head"><span class="sec-no">09</span><h2>关键时间线</h2></div>
+  <p class="sec-desc">71 天里的 14 个节点。金色为转折点。</p>
+
+  <div class="card">
+    <div class="tl">
+      <div class="tl-item key">
+        <div class="tl-date">2026.08.01</div>
+        <div class="tl-title">首次线下接触</div>
+        <div class="tl-body">带看人居沁川林语、中铁卓萃。客户当场未表态，但建立了初步信任。</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">08.04 — 08.19</div>
+        <div class="tl-title">等待期：反复确认丈夫回蓉时间</div>
+        <div class="tl-body">团队两次主动跟进，客户三次回复"等他回来"。<b>丈夫缺位的问题从第一天就存在。</b></div>
+      </div>
+      <div class="tl-item key">
+        <div class="tl-date">08.19</div>
+        <div class="tl-title">需求一次性说清</div>
+        <div class="tl-body">「离学校近、有阳台、500 万内、有商业、不陪跑太久」。同日得知明信项目（10 月亮相、150㎡ 约 380-400 万），表示"可以等"。</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">08.20</div>
+        <div class="tl-title">新川方案被否</div>
+        <div class="tl-body">云锦 66 因"无阳台、楼间距近"出局。客户列出偏好清单：卓萃、西派、翡悦天华、远达。</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">08.21</div>
+        <div class="tl-title">天府新区政策利好 / 卓萃复看邀约被拒</div>
+        <div class="tl-body">客户坚持"我要等我老公呀，我一个人白看呀"——再次确认决策结构。</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">08.23 — 08.25</div>
+        <div class="tl-title">保利和颂因"阳台需封"被否；客户主动提出卖房</div>
+        <div class="tl-body">「帮我卖下房呗」——从买方客户升级为双向委托关系。</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">08.30</div>
+        <div class="tl-title">丈夫定调：先卖后买</div>
+        <div class="tl-body">「他说不想有压力，让我抓紧卖房」。客户补充"我还有套房的嘛"，说明过渡居住不是问题。</div>
+      </div>
+      <div class="tl-item key">
+        <div class="tl-date">09.03</div>
+        <div class="tl-title">自我结论形成</div>
+        <div class="tl-body">「卓萃太偏，西派交房太晚，咋看都觉得翡悦最合适」。同时透露 7 月由其他中介带看过西派与翡悦，<b>3 个月保护期由此起算</b>。</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">09.05</div>
+        <div class="tl-title">新政焦虑日（最佳推动窗口已错过）</div>
+        <div class="tl-body">客户看到"上涨 6.8%"文章后"心好慌"，翻出翡悦 2 楼 508 万、曾谈 6 楼 530 万、交诚意金未获批复的旧账。团队当日劝阻盲目降价。</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">09.05 晚</div>
+        <div class="tl-title">远达麓湖云邸顶跃被推出</div>
+        <div class="tl-body">500 万特价现房、顶楼复式带花园。客户反应积极（"比我近多了"），但要求看样板间，<b>至今未落地带看</b>。</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">09.08</div>
+        <div class="tl-title">卖房压力峰值</div>
+        <div class="tl-body">「我的房给我砍到 300W，咋卖嘛，肉疼」，与心理价差 35 万。同日明确"花园是女人的终极梦想"。</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">09.11</div>
+        <div class="tl-title">信息过载 + 情绪高点</div>
+        <div class="tl-body">研究 489 限高、麓湖 C23（"梦中情房"，700 万）、天西万象城。坦承"未来收入不一定稳定""现在买房比当年选老公还难"。</div>
+      </div>
+      <div class="tl-item key">
+        <div class="tl-date">09.19</div>
+        <div class="tl-title">底价首次明确 / 内部转化机会出现</div>
+        <div class="tl-body">给出 335 万含车位；东哥表示"我想买你这套房子"但超预算。说明该房源在团队内部即有承接可能。</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">10.11 — 10.30</div>
+        <div class="tl-title">静默期</div>
+        <div class="tl-body">记录整理后无新进展。<b>保护期已于 10 月到期，明信已于 10 月亮相——两件事都还没有跟进，这是当前最大的机会成本。</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 10 ================= -->
+<section id="s10">
+  <div class="sec-head"><span class="sec-no">10</span><h2>话术库</h2></div>
+  <p class="sec-desc">三个高频场景，直接可用。原则：不劝、不催、不承诺，只给确定性和选择。</p>
+
+  <div class="grid3">
+    <div class="card">
+      <h3>场景一 · 她说"卖不掉/被砍价"</h3>
+      <p style="font-size:13.5px;color:var(--ink2);line-height:1.85;margin:0">
+        「姐，我们刚拉了同小区近 90 天的真实成交，33x 这个价在这个面积段是站得住的，砍到 300 的是在按投资客的逻辑出价。<br><br>
+        另外我们这边走内部渠道，能帮您省掉 1.75 个点的佣金，等于买家少出 5 万多、您不少拿一分——这个我们之前没跟您细算过。<br><br>
+        您别急着降，降价是最贵的成交方式。」
+      </p>
+    </div>
+    <div class="card">
+      <h3>场景二 · 推动丈夫参与</h3>
+      <p style="font-size:13.5px;color:var(--ink2);line-height:1.85;margin:0">
+        「姐，哥不在成都也完全不影响，我们约个 20 分钟视频就行。<br><br>
+        我把两个盘做成一页纸：总价、首付、月供、到学校的车程、交房时间，五个数字。哥不用听我们讲楼盘，他只需要看这五个数字，然后告诉您哪个能接受。<br><br>
+        他关心的其实不是买哪儿，是不让家里背压力——这个我们能算给他看。」
+      </p>
+    </div>
+    <div class="card">
+      <h3>场景三 · 她又在刷到新盘/涨价消息</h3>
+      <p style="font-size:13.5px;color:var(--ink2);line-height:1.85;margin:0">
+        「姐，这个我也看到了。说实话，现在这个阶段，涨的是优惠点位在收，不是房价在涨。<br><br>
+        您真正的风险不是买贵了 5 万，是旧房多降了 30 万——这两件事的量级差 6 倍。<br><br>
+        所以咱们这周先把卖房的事推一步，新房我盯着，有真的合适的我第一时间发您，您不用天天刷。」
+      </p>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top:20px">
+    <b>一条禁忌：</b>不要再对她说"这个盘很适合你"。她已经听过太多次，免疫了。改成说"这个盘哪里不符合你的条件，我告诉你"——<b>主动挑毛病的人，才像站在她这边的人。</b>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap" style="padding:0">
+    <b>数据说明</b><br>
+    本报告全部结论基于 2026 年 8 月 1 日至 10 月 11 日的微信沟通记录（421 条消息）整理，不含任何外部市场数据。价格、面积、交付时间均为客户或团队在对话中口述，未经开发商核实；月供测算为估算值（首付 15%、商贷 30 年、年利率 3.0%、等额本息），实际以银行审批为准。楼盘加权评分为基于客户偏好的主观建模，权重设定见第 05 节说明。<br><br>
+    <b>保密提示</b>：本文含客户个人信息与家庭决策细节，仅限内部使用，请勿转发至客户群或第三方。<br><br>
+    报告生成日期：2026 年 10 月 30 日
+  </div>
+</footer>
+
+</main>
+</body>
+</html>
